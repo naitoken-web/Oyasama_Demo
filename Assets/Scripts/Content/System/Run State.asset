@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10270cba4b6acf849bee72964c9bb237, type: 3}
+  m_Name: Run State
+  m_EditorClassIdentifier: Assembly-CSharp::RunState
+  Floor: 1
+  Coins: 54
+  Bag: {fileID: 0}
+  Relics: []
+  Seed: 0
+  Consumables:
+    RemoveToken: 1
+    RerollItem: 1
+    RerollRelic: 1
+  ActiveRarityBoosts: []
+  DestroyHistory:
+  - Floor: 1
+    SpinIndex: 0
+    Symbol: {fileID: 11400000, guid: 1a9a8daeccc60c54db62dfefedc4ca05, type: 2}
+    PosX: 0
+    PosY: 3
+    Cause: DestroyAdjacentCoins
+  - Floor: 1
+    SpinIndex: 0
+    Symbol: {fileID: 11400000, guid: 1a9a8daeccc60c54db62dfefedc4ca05, type: 2}
+    PosX: 3
+    PosY: 0
+    Cause: DestroyAdjacentCoins
+  - Floor: 1
+    SpinIndex: 0
+    Symbol: {fileID: 11400000, guid: 1a9a8daeccc60c54db62dfefedc4ca05, type: 2}
+    PosX: 4
+    PosY: 2
+    Cause: DestroyAdjacentCoins
+  TotalSpins: 0

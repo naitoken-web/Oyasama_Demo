@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d019912c1f94558419a55677a9465cbb, type: 3}
+  m_Name: Consumable Catalog SO
+  m_EditorClassIdentifier: Assembly-CSharp::ConsumableCatalogSO
+  Items:
+  - {fileID: 11400000, guid: 95d4051accba8f34e80deb478f4ca81f, type: 2}
+  - {fileID: 11400000, guid: 9448b900cb05c4e468ac6b2d293ceed8, type: 2}
+  - {fileID: 11400000, guid: 4382ea27df2db28439cdd3ea7f14a511, type: 2}

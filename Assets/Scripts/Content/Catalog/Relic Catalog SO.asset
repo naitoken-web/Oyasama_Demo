@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5976367c44f8b341ad59b01180fc7f9, type: 3}
+  m_Name: Relic Catalog SO
+  m_EditorClassIdentifier: Assembly-CSharp::RelicCatalogSO
+  Commons:
+  - {fileID: 11400000, guid: f17ded4a6e8935847a77d0cd871bc2d9, type: 2}
+  - {fileID: 11400000, guid: 3172a2083f9b02d4f93648c25ad092bf, type: 2}
+  Uncommons:
+  - {fileID: 11400000, guid: 71c01194d6a6e734d80fc132a3bcc858, type: 2}
+  Rares: []
+  Epics: []

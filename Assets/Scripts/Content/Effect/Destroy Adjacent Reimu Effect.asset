@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f316d2567b1a9e468c9edb7d8b1a2dd, type: 3}
+  m_Name: Destroy Adjacent Reimu Effect
+  m_EditorClassIdentifier: Assembly-CSharp::DestroyAdjacentCoinsEffect
+  TargetTag: onmyo
+  Use8Neighbors: 1
+  CoinPerDestroyed: 10
+  desc: "\u5468\u56F2\u306E\u9670\u967D\u7389\u3092\u7834\u58CA\u3057\uFF0C\u305D\u306E\u6570\xD710\u30B3\u30A4\u30F3\u7372\u5F97"
