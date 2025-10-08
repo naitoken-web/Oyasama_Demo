@@ -1,0 +1,234 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{0E74005F-C146-2E4E-EDAE-3B6003B76AD9}|Assembly-CSharp.csproj|C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\assets\\scripts\\core\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0E74005F-C146-2E4E-EDAE-3B6003B76AD9}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\core\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0E74005F-C146-2E4E-EDAE-3B6003B76AD9}|Assembly-CSharp.csproj|c:\\users\\syokutakg\\documents\\unityproject\\kouun no inaba\\assets\\scripts\\core\\draftsystemunique.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0E74005F-C146-2E4E-EDAE-3B6003B76AD9}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\core\\draftsystemunique.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0E74005F-C146-2E4E-EDAE-3B6003B76AD9}|Assembly-CSharp.csproj|c:\\users\\syokutakg\\documents\\unityproject\\kouun no inaba\\assets\\scripts\\core\\draftsystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0E74005F-C146-2E4E-EDAE-3B6003B76AD9}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\core\\draftsystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0E74005F-C146-2E4E-EDAE-3B6003B76AD9}|Assembly-CSharp.csproj|C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\assets\\scripts\\core\\boardview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0E74005F-C146-2E4E-EDAE-3B6003B76AD9}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\core\\boardview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0E74005F-C146-2E4E-EDAE-3B6003B76AD9}|Assembly-CSharp.csproj|c:\\users\\syokutakg\\documents\\unityproject\\kouun no inaba\\assets\\scripts\\core\\scoreplumbing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0E74005F-C146-2E4E-EDAE-3B6003B76AD9}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\core\\scoreplumbing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0E74005F-C146-2E4E-EDAE-3B6003B76AD9}|Assembly-CSharp.csproj|C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\assets\\scripts\\core\\effect\\spawntaggedondeatheffect.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0E74005F-C146-2E4E-EDAE-3B6003B76AD9}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\core\\effect\\spawntaggedondeatheffect.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0E74005F-C146-2E4E-EDAE-3B6003B76AD9}|Assembly-CSharp.csproj|C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\assets\\scripts\\core\\effectso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0E74005F-C146-2E4E-EDAE-3B6003B76AD9}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\core\\effectso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0E74005F-C146-2E4E-EDAE-3B6003B76AD9}|Assembly-CSharp.csproj|C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\assets\\scripts\\core\\effect\\destroyadjacentcoinseffect.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0E74005F-C146-2E4E-EDAE-3B6003B76AD9}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\core\\effect\\destroyadjacentcoinseffect.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0E74005F-C146-2E4E-EDAE-3B6003B76AD9}|Assembly-CSharp.csproj|C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\assets\\scripts\\core\\runstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0E74005F-C146-2E4E-EDAE-3B6003B76AD9}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\core\\runstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0E74005F-C146-2E4E-EDAE-3B6003B76AD9}|Assembly-CSharp.csproj|C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\assets\\scripts\\animator\\spinanimator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0E74005F-C146-2E4E-EDAE-3B6003B76AD9}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\animator\\spinanimator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0E74005F-C146-2E4E-EDAE-3B6003B76AD9}|Assembly-CSharp.csproj|C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\assets\\scripts\\core\\spinsystemex.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0E74005F-C146-2E4E-EDAE-3B6003B76AD9}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\core\\spinsystemex.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0E74005F-C146-2E4E-EDAE-3B6003B76AD9}|Assembly-CSharp.csproj|C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\assets\\scripts\\core\\symbolview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0E74005F-C146-2E4E-EDAE-3B6003B76AD9}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\core\\symbolview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0E74005F-C146-2E4E-EDAE-3B6003B76AD9}|Assembly-CSharp.csproj|C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\assets\\scripts\\core\\legacy\\spinsystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0E74005F-C146-2E4E-EDAE-3B6003B76AD9}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\core\\legacy\\spinsystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 8,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DraftSystemUnique.cs",
+              "DocumentMoniker": "C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\Assets\\Scripts\\Core\\DraftSystemUnique.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Core\\DraftSystemUnique.cs",
+              "ToolTip": "C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\Assets\\Scripts\\Core\\DraftSystemUnique.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Core\\DraftSystemUnique.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-30T01:54:17.775Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DraftSystem.cs",
+              "DocumentMoniker": "C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\Assets\\Scripts\\Core\\DraftSystem.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Core\\DraftSystem.cs",
+              "ToolTip": "C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\Assets\\Scripts\\Core\\DraftSystem.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Core\\DraftSystem.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-30T01:54:16.151Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ScorePlumbing.cs",
+              "DocumentMoniker": "C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\Assets\\Scripts\\Core\\ScorePlumbing.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Core\\ScorePlumbing.cs",
+              "ToolTip": "C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\Assets\\Scripts\\Core\\ScorePlumbing.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Core\\ScorePlumbing.cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAAApwDkAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-29T14:47:23.445Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "SpawnTaggedOnDeathEffect.cs",
+              "DocumentMoniker": "C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\Assets\\Scripts\\Core\\Effect\\SpawnTaggedOnDeathEffect.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Core\\Effect\\SpawnTaggedOnDeathEffect.cs",
+              "ToolTip": "C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\Assets\\Scripts\\Core\\Effect\\SpawnTaggedOnDeathEffect.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Core\\Effect\\SpawnTaggedOnDeathEffect.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAADwvzsAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-29T14:41:34.265Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "SpinSystemEx.cs",
+              "DocumentMoniker": "C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\Assets\\Scripts\\Core\\SpinSystemEx.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Core\\SpinSystemEx.cs",
+              "ToolTip": "C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\Assets\\Scripts\\Core\\SpinSystemEx.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Core\\SpinSystemEx.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAADYAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-27T02:20:40.633Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "SpinAnimator.cs",
+              "DocumentMoniker": "C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\Assets\\Scripts\\Animator\\SpinAnimator.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Animator\\SpinAnimator.cs",
+              "ToolTip": "C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\Assets\\Scripts\\Animator\\SpinAnimator.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Animator\\SpinAnimator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEBAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-24T15:18:06.525Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "BoardView.cs",
+              "DocumentMoniker": "C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\Assets\\Scripts\\Core\\BoardView.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Core\\BoardView.cs",
+              "ToolTip": "C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\Assets\\Scripts\\Core\\BoardView.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Core\\BoardView.cs",
+              "ViewState": "AgIAAHMAAAAAAAAAAAAgwJkAAABFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-24T14:34:58.287Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "RunState.cs",
+              "DocumentMoniker": "C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\Assets\\Scripts\\Core\\RunState.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Core\\RunState.cs",
+              "ToolTip": "C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\Assets\\Scripts\\Core\\RunState.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Core\\RunState.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAswCEAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-24T00:34:43.557Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "GameController.cs",
+              "DocumentMoniker": "C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\Assets\\Scripts\\Core\\GameController.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Core\\GameController.cs",
+              "ToolTip": "C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\Assets\\Scripts\\Core\\GameController.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Core\\GameController.cs",
+              "ViewState": "AgIAADcBAAAAAAAAAAAWwG8BAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-23T12:01:52.624Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "DestroyAdjacentCoinsEffect.cs",
+              "DocumentMoniker": "C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\Assets\\Scripts\\Core\\Effect\\DestroyAdjacentCoinsEffect.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Core\\Effect\\DestroyAdjacentCoinsEffect.cs",
+              "ToolTip": "C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\Assets\\Scripts\\Core\\Effect\\DestroyAdjacentCoinsEffect.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Core\\Effect\\DestroyAdjacentCoinsEffect.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-28T13:11:57.961Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "EffectSO.cs",
+              "DocumentMoniker": "C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\Assets\\Scripts\\Core\\EffectSO.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Core\\EffectSO.cs",
+              "ToolTip": "C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\Assets\\Scripts\\Core\\EffectSO.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Core\\EffectSO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-28T13:12:08.246Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "SymbolView.cs",
+              "DocumentMoniker": "C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\Assets\\Scripts\\Core\\SymbolView.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Core\\SymbolView.cs",
+              "ToolTip": "C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\Assets\\Scripts\\Core\\SymbolView.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Core\\SymbolView.cs",
+              "ViewState": "AgIAACcAAAAAAAAAAAAIwDoAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-28T09:47:49.405Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "SpinSystem.cs",
+              "DocumentMoniker": "C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\Assets\\Scripts\\Core\\Legacy\\SpinSystem.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Core\\Legacy\\SpinSystem.cs",
+              "ToolTip": "C:\\Users\\SyokutakG\\Documents\\UnityProject\\kouun no inaba\\Assets\\Scripts\\Core\\Legacy\\SpinSystem.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Core\\Legacy\\SpinSystem.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-28T10:40:58.555Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
