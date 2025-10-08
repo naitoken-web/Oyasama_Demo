@@ -1,12 +1,9 @@
-// GameController.csi·•ª‚ÌŠÌj
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.PlayerSettings;
-using static UnityEngine.GraphicsBuffer;
 
 public class GameController : MonoBehaviour
 {
@@ -15,18 +12,23 @@ public class GameController : MonoBehaviour
     [SerializeField] SpinSystemEx spinSystem;
     [SerializeField] ScoreResolver resolver;
     [SerializeField] RentScheduleSO rent;//
-    [SerializeField] RunState run;                 // š ’Ç‰ÁF“‡ó‘Ô
-    [SerializeField] StartBagSO startBag; // © ’Ç‰Á
+    HudPresenter hudPresenter;
+    RunInitializer runInitializer;
+    FloorManager floorManager;
+    CountdownCoordinator countdownCoordinator;
+    DraftPresenter draftPresenter;
+    ScoreCommitExecutor scoreCommitExecutor;
+    EndGamePresenter endGamePresenter;
     [SerializeField] UIRelicBar relicBar;
-    [SerializeField] DraftSystem draftSystem;      // š ’Ç‰ÁF’Š‘I
-    [SerializeField] SymbolCatalogSO symbolCatalog;// draftSystem‚ÖŠ„“–Ï‚È‚çÈ—ª‰Â
-    [SerializeField] RelicCatalogSO relicCatalog;  // “¯ã
-    [SerializeField] UIDraftView draftView;        // š ’Ç‰ÁFUI
+    [SerializeField] DraftSystem draftSystem;      // â˜… è¿½åŠ ï¼šæŠ½é¸
+    [SerializeField] SymbolCatalogSO symbolCatalog;// draftSystemã¸å‰²å½“æ¸ˆãªã‚‰çœç•¥å¯
+    [SerializeField] RelicCatalogSO relicCatalog;  // åŒä¸Š
+    [SerializeField] UIDraftView draftView;        // â˜… è¿½åŠ ï¼šUI
 
     [Header("Config")]
     [SerializeField] DifficultyConfigSO difficultyConfig;
 
-    RentScheduleSO activeRent; // © ‘I‘ğ“ïˆÕ“x‚Ì‰Æ’Àƒe[ƒuƒ‹‚ğ•Û
+    RentScheduleSO activeRent; // â† é¸æŠé›£æ˜“åº¦ã®å®¶è³ƒãƒ†ãƒ¼ãƒ–ãƒ«ã‚’ä¿æŒ
 
     [Header("HUD")]
     [SerializeField] TMP_Text coinsText;[SerializeField] TMP_Text floorText;
@@ -35,8 +37,8 @@ public class GameController : MonoBehaviour
     [SerializeField] Button spinButton;
 
     [Header("Game Over UI")]
-    [SerializeField] GameObject gameOverPanel;   // ”ñ•\¦‚Ìƒpƒlƒ‹
-    [SerializeField] Button backToTitleButton;   // uƒ^ƒCƒgƒ‹‚É–ß‚év
+    [SerializeField] GameObject gameOverPanel;   // éè¡¨ç¤ºã®ãƒ‘ãƒãƒ«
+    [SerializeField] Button backToTitleButton;   // ã€Œã‚¿ã‚¤ãƒˆãƒ«ã«æˆ»ã‚‹ã€
 
     [SerializeField] GameObject victoryPanel;
     [SerializeField] Button backToTitleOnWinButton;
@@ -54,7 +56,7 @@ public class GameController : MonoBehaviour
 
     private List<ICountdownEffect> countdownSources = new();
 
-    bool removeModeArmed = false; // œ‹ƒ‚[ƒh‘Ò‹@ƒtƒ‰ƒOi‰º•”‚Ìœ‹ƒg[ƒNƒ“ƒ{ƒ^ƒ“‚ÅONj
+    bool removeModeArmed = false; // é™¤å»ãƒ¢ãƒ¼ãƒ‰å¾…æ©Ÿãƒ•ãƒ©ã‚°ï¼ˆä¸‹éƒ¨ã®é™¤å»ãƒˆãƒ¼ã‚¯ãƒ³ãƒœã‚¿ãƒ³ã§ONï¼‰
 
 
     int spinsLeft = 0, rentDue = 0;
@@ -72,13 +74,13 @@ public class GameController : MonoBehaviour
                 removeModeArmed,
                 onRemoveSymbol: (sym) => {
                     if (!removeModeArmed) return;
-                    // 1‚Â‚¾‚¯íœiÅ‰‚Ìˆê’vj
+                    // 1ã¤ã ã‘å‰Šé™¤ï¼ˆæœ€åˆã®ä¸€è‡´ï¼‰
                     if (run.Bag.RemoveOne(sym))
                     {
                         run.Consumables.RemoveToken = Mathf.Max(0, run.Consumables.RemoveToken - 1);
                         removeModeArmed = false;
                         inventoryView.Close();
-                        ShowPreviewBoard(); // •K—v‚È‚çˆê——‚ğÄ•`‰æ‚·‚éŠÖ”‚ğ—pˆÓ
+                        ShowPreviewBoard(); // å¿…è¦ãªã‚‰ä¸€è¦§ã‚’å†æç”»ã™ã‚‹é–¢æ•°ã‚’ç”¨æ„
                     }
                 },
                 onRemoveRelic: (relic) => {
@@ -92,11 +94,11 @@ public class GameController : MonoBehaviour
                     }
                 },
                 onClickConsumable: (type) => {
-                    // ƒCƒ“ƒxƒ“ƒgƒŠ“à‚Ìgg‚¤h‰Ÿ‰ºBœ‹‚Í‰º•”ƒ{ƒ^ƒ“„§‚¾‚ªA‚±‚±‚©‚ç•‘•‚µ‚Ä‚à‰Â
+                    // ã‚¤ãƒ³ãƒ™ãƒ³ãƒˆãƒªå†…ã®â€œä½¿ã†â€æŠ¼ä¸‹ã€‚é™¤å»ã¯ä¸‹éƒ¨ãƒœã‚¿ãƒ³æ¨å¥¨ã ãŒã€ã“ã“ã‹ã‚‰æ­¦è£…ã—ã¦ã‚‚å¯
                     if (type == ConsumableType.RemoveToken && run.Consumables.RemoveToken > 0)
                     {
                         removeModeArmed = true;
-                        // UI‚ÌŒ©‚½–Ú‚ğXV‚µ‚½‚©‚Á‚½‚çA‚»‚Ì‚Ü‚ÜÄOpen‚© SetConsumableCount ‚È‚Ç‚ğ—˜—p
+                        // UIã®è¦‹ãŸç›®ã‚’æ›´æ–°ã—ãŸã‹ã£ãŸã‚‰ã€ãã®ã¾ã¾å†Openã‹ SetConsumableCount ãªã©ã‚’åˆ©ç”¨
                         inventoryView.Open(run, removeModeArmed, (s) => { }, (r) => { });
                     }
                 }
@@ -104,422 +106,58 @@ public class GameController : MonoBehaviour
         });
         removeTokenButton.onClick.AddListener(() => {
             if (run.Consumables.RemoveToken <= 0) return;
-            removeModeArmed = true;                 // š •‘•
-            inventoryView.Open(run, removeModeArmed,
-                onRemoveSymbol: (sym) => {
-                    if (!removeModeArmed) return;
-                    if (run.Bag.RemoveOne(sym))
-                    {
-                        run.Consumables.RemoveToken--;
-                        removeModeArmed = false;
-                        inventoryView.Close();
-                        boardView.RefreshAll();
-                    }
-                },
-                onRemoveRelic: (relic) => {
-                    if (!removeModeArmed) return;
-                    if (run.Relics.Remove(relic))
-                    {
-                        run.Consumables.RemoveToken--;
-                        removeModeArmed = false;
-                        inventoryView.Close();
-                        relicBar?.Refresh(run.Relics);
-                    }
-                }
-            );
+
+        hudPresenter = new HudPresenter(coinsText, floorText, spinsText, lastScoreText);
+        runInitializer = new RunInitializer(run, startBag);
+        floorManager = new FloorManager(hudPresenter, relicBar, spinButton);
+        countdownCoordinator = new CountdownCoordinator(boardView, spinAnimator);
+        draftPresenter = new DraftPresenter(draftSystem, draftView, relicBar);
+        scoreCommitExecutor = new ScoreCommitExecutor(boardView, effectFx, popupManager, inventoryView);
+        endGamePresenter = new EndGamePresenter(gameOverPanel, backToTitleButton, victoryPanel, backToTitleOnWinButton, hudPresenter);
+        endGamePresenter?.HideAll();
+        floorManager?.LoadFloor(activeRent, run, out spinsLeft, out rentDue);
+        int totalSpins = 0;
+        if (activeRent != null)
+        {
+            var entry = activeRent.Get(run.Floor);
+            totalSpins = entry.Spins;
+        }
+        hudPresenter?.UpdateHud(run, rentDue, spinsLeft, totalSpins);
+        // 1) Bag ç‚¾WihtgÅ‚mÉ“j
+        countdownCoordinator?.RebuildFromBagOnly(run);
+        // 2)  targeti run.CurrentUidGridjÉ‘Î‚ÄAUIDÅ‘OÄ
+        countdownCoordinator?.PrewarmForTarget(run, target);
+        // 3) AjÌ–â‚¢í‚¹É”ÄAÉƒAj[^Ö“n
+        countdownCoordinator?.SyncWithAnimator(run);
+        countdownCoordinator?.InitializeAndApply(run, target); //  Ç‰
+            yield return StartCoroutine(scoreCommitExecutor.CommitScoreCoroutine(target, run, sb, rng));
+            countdownCoordinator?.InitializeAndApply(run, target);
+        scoreCommitExecutor?.ApplyPendingBoardOps(target, run);                 //  Å”Õ–Ê•ÏXKp
+        countdownCoordinator?.InitializeAndApply(run, target);         // JEg\Ä“KpiÈ‚Ì“Öj
+        hudPresenter?.SetLastScore(score);
+        if (showDraft && spinsLeft > 0 && draftPresenter != null)
+            yield return draftPresenter.PresentSymbolDraft(run, rng);
+
+                if (draftPresenter != null)
+                    yield return draftPresenter.PresentRelicDraft(run, rng);
+        runInitializer?.InitializeRun(seed);
+
+        endGamePresenter?.ShowGameOver(() =>
+            SceneLoader.LoadTitle();
         });
-    }
 
-    void Start()
+
     {
-        // “ïˆÕ“x‚É‰‚¶‚ÄRentSchedule‚ğŒˆ’è
-        var entry = difficultyConfig != null
-                  ? difficultyConfig.GetByDifficulty1Based(Mathf.Max(1, GameBootOptions.SelectedDifficulty))
-                  : null;
-        activeRent = entry != null ? entry.RentSchedule : null;
-
-        // ”O‚Ì‚½‚ßƒtƒH[ƒ‹ƒoƒbƒN
-        if (activeRent == null)
-        {
-            Debug.LogWarning("[GameController] activeRent is null. Please set DifficultyConfigSO.");
-        }
-
-        if (victoryPanel) victoryPanel.SetActive(false);
-        if (gameOverPanel) gameOverPanel.SetActive(false);
-        rng = new System.Random(run.Seed);
-        StartNewRun();
-
-        spinAnimator.SetCountdownSources(countdownSources, run);
-        boardView.SetCountdownSources(countdownSources, run);  // š ’Ç‰Á
-        // š ƒtƒƒA‚É“ü‚Á‚½‚ç‚Ü‚¸gŒ©‚¹‚é‚¾‚¯h
-        ShowPreviewBoard();
-    }
-
-    void LoadFloor(int f)
-    {
-        run.Floor = f;
-
-        // ‚±‚±‚Å¡‚Ü‚Å‚Ì rent.Get(...) ‚ğ activeRent ‚É·‚µ‘Ö‚¦‚é
-        var e = activeRent != null ? activeRent.Get(run.Floor) : default;
-        spinsLeft = e.Spins;
-        rentDue = e.RequiredScore;
-
-        UpdateHud();
-        relicBar?.Refresh(run.Relics);
-        spinButton.interactable = true;
-
-    }
-
-    void UpdateHud()
-    {
-        coinsText.text = $"Coins: {run.Coins} / {rentDue}";
-        floorText.text = $"Stage: {run.Floor}";
-        spinsText.text = $"Turn: {spinsLeft} / {activeRent.Get(run.Floor).Spins}";
-    }
-
-    void DoSpinAndResolve(bool showDraft)
-    {
-        var(target, uidGrid) = spinSystem.SpinDeal(run.Bag, rng);
-        run.CurrentUidGrid = uidGrid;
-
-        spinButton.interactable = false;
-
-        // š Bag‚ğƒAƒjƒ[ƒ^[‚Ö
-        spinAnimator.SetBag(run.Bag);
-
-        StartCoroutine(SpinRoutine(target, showDraft));
-    }
-
-    IEnumerator SpinRoutine(SymbolSO[,] target, bool showDraft)
-    {
-        // 1) Bag ‚©‚ç‚¾‚¯ûWiƒhƒ‰ƒtƒg’¼Œã‚Å‚àŠmÀ‚É“ü‚éj
-        RebuildCountdownSourcesFromBagOnly();
-        // 2) ¡‰ñ‰ñ‚· targeti‚Æ run.CurrentUidGridj‚É‘Î‚µ‚ÄAUID‚Å‘O‚à‚Á‚Ä‰Šú‰»
-        PrewarmCountdownsForTarget(target);
-        // 3) ƒAƒjƒ’†‚Ì–â‚¢‡‚í‚¹‚É”õ‚¦‚ÄAæ‚ÉƒAƒjƒ[ƒ^‚Ö“n‚·
-        spinAnimator.SetCountdownSources(countdownSources, run);
-        yield return spinAnimator.PlaySpinTo(target, rng);
-        boardView.SetFromGrid(target);
-        InitializeAndApplyCountdowns(target); // š ’Ç‰Á
-
-        // 1) š Œø‰Ê“K—piBoardSnapshot + EffectSO.Evaluate ¨ ScoreBuilder ‚ÉÏ‚Şj
-        // BoardSnapshot ‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^ˆø”‚Í‚ ‚È‚½‚Ì’è‹`‚É‡‚í‚¹‚Ä‚­‚¾‚³‚¢B
-        var snapshot = new BoardSnapshot(target); // —áF”Õ–ÊQÆ‚¾‚¯‚Å‘«‚è‚éê‡
-        var sb = new ScoreBuilder { Run = run };
-
-        // ”Õ–Êã‚Ì‘SƒZƒ‹‚ğ‘–¸‚µ‚ÄŒø‰Ê‚ğ”­‰Î
-        int W = target.GetLength(0), H = target.GetLength(1);
-        for (int y = 0; y < H; y++)
-            for (int x = 0; x < W; x++)
-            {
-                var s = target[x, y];
-                if (s == null || s.Effects == null) continue;
-
-                var ctx = new SymbolContext { Pos = new Vector2Int(x, y), Self = s };
-
-                for (int i = 0; i < s.Effects.Count; i++)
-                {
-                    var eff = s.Effects[i];
-                    if (eff == null) continue;
-
-                    if (eff is ICountdownEffect ce)
-                    {
-                        int uid = run.CurrentUidGrid?[x, y] ?? 0;
-                        if (uid > 0) ce.EnsureInitializedByUid(uid, run, ctx.Pos); // š VAPI
-                        sb.RequestCountdownStep(ce);
-                    }
-
-                    eff.Evaluate(ctx, snapshot, sb);
-                }
-            }
-        run.ActiveRarityBoosts.Clear();
-        run.ActiveRarityBoosts.AddRange(sb.DraftBoosts);
-
-        // 2) š Œø‰Ê‚ÌƒRƒ~ƒbƒg•‰‰oi”j‰ó¨•`‰æXV¨ƒAƒjƒ¨’Ç‰ÁƒQƒCƒ“ popupj
-        //    SO ‚Å‚ÍƒRƒ‹[ƒ`ƒ“•s‰Â‚È‚Ì‚Å MonoBehaviour ‘¤‚Å•K‚¸‘Ò‚Â
-        if (sb.DestroyQueue.Count > 0 || sb.AnimEvents.Count > 0 || sb.CellGains.Count > 0)
-        {
-            yield return StartCoroutine(CommitScoreCoroutine(target, run, sb));
-        }
-
-        // š ƒXƒsƒ“I—¹F‚±‚ÌƒXƒsƒ“‚Å—v‹‚³‚ê‚½ƒJƒEƒ“ƒgƒ_ƒEƒ“‚¾‚¯ Step() Às
-        foreach (var stepper in sb.GetCountdownSteppers())
-            stepper.Step(run);
-
-        ApplyPendingBoardOps(target);                 // š ‚±‚±‚Å”Õ–Ê•ÏX‚ğ“K—p
-        boardView.SetFromGrid(target);                // Œ©‚½–Ú‚ğXV
-        InitializeAndApplyCountdowns(target);         // ƒJƒEƒ“ƒg•\¦‚àÄ“K—pi‚ ‚È‚½‚Ì“‡ŠÖ”j
-
-        // 3) ]—ˆ‚Ì’ÊíƒXƒRƒA‰ğŒˆitarget ‚Í”j‰ó”½‰fÏ‚İj
-        var score = resolver.ResolveDetailed(target, out var gains, out var log);
-        run.Coins += score; spinsLeft--;
-        lastScoreText.text = $"+{score}";
-        UpdateHud();
-
-        if (popupManager != null && gains != null && gains.Count > 0)
-        {
-            yield return popupManager.ShowAscending(boardView, gains);
-        }
-
-        // 4) ƒhƒ‰ƒtƒgE‰Æ’Àƒ`ƒFƒbƒNiŠù‘¶‚Ç‚¨‚èj
-        draftSystem.CurrentRun = run; // š ‚±‚ê‚¾‚¯
-        if (showDraft && spinsLeft > 0)
-            yield return PresentSymbolDraftRoutine();
-
-        if (spinsLeft == 0)
-        {
-            if (run.Coins >= rentDue)
-            {
-                run.Coins -= rentDue;
-                yield return PresentRelicDraftRoutine();
-                if (run.Floor >= MaxFloorToWin) ShowVictory();
-                else LoadFloor(run.Floor + 1);
-                yield break;
-            }
-            else
-            {
-                ShowGameOver();
-                yield break;
-            }
-        }
-
-        spinButton.interactable = true;
-    }
-
-
-    void StartNewRun(int seed = 0)
-    {
-        run.Seed = seed;
-        run.Coins = 0;
-        run.Floor = 1;
-        run.Relics.Clear();
-        run.DestroyHistory.Clear();
-        run.ActiveRarityBoosts.Clear();
-
-        run.Consumables = new ConsumableCounts
-        {
-            RemoveToken = 1,
-            RerollItem = 1,
-            RerollRelic = 1
-        };
-
-        // ƒ‰ƒ“ƒ^ƒCƒ€—pƒoƒbƒO‚ğ–ˆ‰ñ¶¬‚µ‚Ä’†g‚ğƒRƒs[
-        run.Bag = ScriptableObject.CreateInstance<Bag>();
-        foreach (var s in startBag.Items) run.Bag.Add(s);   // š UID ‚ğU‚Á‚Ä’Ç‰Á
-
-        rng = new System.Random(run.Seed);
-        LoadFloor(run.Floor);
-
-    }
-
-    void ShowGameOver()
-    {
-        spinButton.interactable = false;
-        // ‚à‚µƒhƒ‰ƒtƒgUI‚ªŠJ‚¢‚Ä‚¢‚½‚ç•Â‚¶‚é“™‚ÌƒK[ƒh‚ğ“ü‚ê‚éi”CˆÓj
-        // draftView.Hide(); ‚È‚Ç
-
-        if (lastScoreText) lastScoreText.text += "\n<color=#f55>GAME OVER</color>";
-        if (gameOverPanel) gameOverPanel.SetActive(true);
-        if (backToTitleButton)
-        {
-            backToTitleButton.onClick.RemoveAllListeners();
-            backToTitleButton.onClick.AddListener(() =>
-            {
-                SceneLoader.LoadTitle();
-            });
-        }
-    }
-
-    void ShowVictory()
-    {
-        spinButton.interactable = false;
-        if (victoryPanel) victoryPanel.SetActive(true);
-        if (backToTitleOnWinButton)
-        {
-            backToTitleOnWinButton.onClick.RemoveAllListeners();
-            backToTitleOnWinButton.onClick.AddListener(() =>
-            {
-                SceneLoader.LoadTitle();
-            });
-        }
-        UnlockNextDifficultyIfNeeded();
-    }
-
-    // GameController.csi·•ªFŸ—˜ƒAƒ“ƒƒbƒNj
-    void UnlockNextDifficultyIfNeeded()
-    {
-        const string KeyUnlocked = "UnlockedDifficultyMax";
-        int current = Mathf.Max(1, GameBootOptions.SelectedDifficulty);
-
-        int maxByConfig = Mathf.Max(1, difficultyConfig != null ? difficultyConfig.Count : 1);
-
-        int unlocked = PlayerPrefs.GetInt(KeyUnlocked, 1);
-        int target = Mathf.Min(current + 1, maxByConfig); // Config‚ÌŒ”‚ğãŒÀ
-
-        if (target > unlocked)
-        {
-            PlayerPrefs.SetInt(KeyUnlocked, target);
-            PlayerPrefs.Save();
-        }
-    }
-
-    // GameController.csi·•ªj
-    // GameController.csi·•ªFƒhƒ‰ƒtƒgƒ‹[ƒ`ƒ“j
-    IEnumerator PresentSymbolDraftRoutine()
-    {
-        var options = draftSystem.GenerateSymbolOptions(rng, 3);
-        bool decided = false;
-
-        // ‚±‚ê‚ğUIDraftView‚©‚çó‚¯æ‚é
-        System.Action<List<SymbolSO>> setOptions = null;
-
-        // š w“Çi+= / -=j
-        System.Action rerollHandler = null;
-        rerollHandler = () => {
-            if (decided) return;
-            if (run.Consumables.RerollItem <= 0) return;
-
-            run.Consumables.RerollItem--;
-            options = draftSystem.GenerateSymbolOptions(rng, 3);
-
-            // š UI‚ÉVŒó•â‚ğ“n‚µ‚Ä‘¦ÄBindiShowSymbolsSlideInEx “à‚Ås‚í‚ê‚éj
-            setOptions?.Invoke(options);
-
-            // ƒ{ƒ^ƒ“Šˆ«‚ğXV
-            draftView.SetRerollInteractable(run.Consumables.RerollItem > 0);
-        };
-        draftView.OnRerollRequested += rerollHandler;
-
-        // š setup ‚Å SetOptions ‚Æ EnableReroll ‚ğó‚¯æ‚é
-        yield return draftView.ShowSymbolsSlideInEx(
-            options,
-            onPick: (picked) => { run.Bag.Add(picked); decided = true; },
-            onSkip: () => { decided = true; },
-            setup: (set, enableReroll) => {
-                setOptions = set;
-                enableReroll(run.Consumables.RerollItem > 0); // ‰ŠúŠˆ«
-            }
-        );
-
-        draftView.OnRerollRequested -= rerollHandler;
-    }
-
-
-
-    IEnumerator PresentRelicDraftRoutine()
-    {
-        var options = draftSystem.GenerateRelicOptions(rng, 3);
-        bool decided = false;
-
-        System.Action<List<RelicSO>> setOptions = null;
-
-        System.Action rerollHandler = null;
-        rerollHandler = () => {
-            if (decided) return;
-            if (run.Consumables.RerollRelic <= 0) return;
-
-            run.Consumables.RerollRelic--;
-            options = draftSystem.GenerateRelicOptions(rng, 3);
-
-            setOptions?.Invoke(options);
-            draftView.SetRerollInteractable(run.Consumables.RerollRelic > 0);
-        };
-        draftView.OnRerollRequested += rerollHandler;
-
-        yield return draftView.ShowRelicsSlideInEx(
-            options,
-            onPick: (picked) => { run.Relics.Add(picked); picked.OnAcquire(run); relicBar?.Refresh(run.Relics); decided = true; },
-            onSkip: () => { decided = true; },
-            setup: (set, enableReroll) => {
-                setOptions = set;
-                enableReroll(run.Consumables.RerollRelic > 0); // š ƒhƒ‰ƒtƒg‚ğŠJ‚­‚½‚Ñ‚É³‚µ‚­‰Šú‰»
-            }
-        );
-
-        draftView.OnRerollRequested -= rerollHandler;
-    }
-
-
-    void ShowPreviewBoard()
-    {
-        // š ƒƒCƒ“rng‚ği‚ß‚È‚¢‚½‚ßAƒtƒƒAˆË‘¶‚Ì‹[—ƒV[ƒh‚Åˆêrng‚ğì‚é
-        //   D‚«‚È®‚ÅOKFƒtƒƒA‚ª“¯‚¶‚È‚ç–ˆ‰ñ“¯‚¶ƒvƒŒƒrƒ…[‚É‚È‚é
-        int previewSeed = run.Seed ^ (run.Floor * 7919);
-        var tempRng = new System.Random(previewSeed);
-
-        var(preview, uidPreview) = spinSystem.SpinDeal(run.Bag, tempRng);
-        run.CurrentUidGrid = uidPreview;                    // š ‚±‚±‚à•Û‘¶
-        boardView.SetFromGrid(preview);
-        lastScoreText.text = "+0";
-        InitializeAndApplyCountdowns(preview); // š ‰‰ñ‚©‚çƒJƒEƒ“ƒg‚ªŒ©‚¦‚é
-    }
-
-    // GameController.cs - CommitScoreCoroutine
-    IEnumerator CommitScoreCoroutine(SymbolSO[,] grid, RunState run, ScoreBuilder score)
-    {
-        // --- A) ‚Ü‚¸ƒAƒjƒÄ¶i= Œ©‚½–Ú‚ªc‚Á‚Ä‚¢‚é‚¤‚¿‚Éj ---
-        var playedShatter = new HashSet<Vector2Int>();
-        foreach (var ev in score.AnimEvents)
-        {
-            var view = boardView.GetCellView(ev.Pos.x, ev.Pos.y);
-            if (!view) continue;
-
-            switch (ev.Type)
-            {
-                case AnimEventType.Bounce:
-                    yield return StartCoroutine(effectFx.Bounce(view, ev.Duration));
-                    break;
-
-                case AnimEventType.Shatter:
-                    if (!playedShatter.Add(ev.Pos)) break; // “¯‚¶ƒZƒ‹‚Í1‰ñ‚¾‚¯
-                    effectFx.Shatter(view, ev.Duration);   // ƒtƒF[ƒh•—h‚ê‚ğ”ñ“¯Šú‘Ò‚¿‚Å
-                    break;
-            }
-        }
-
-        // ‚Ù‚ñ‚Ì­‚µ‘Ò‚Â‚ÆƒVƒƒƒbƒ^[‰‰o‚ªæ‚è‚â‚·‚¢i”CˆÓj
-        if (playedShatter.Count > 0) yield return new WaitForSeconds(0.1f);
-
-        // --- B) ”j‰ó”½‰f + Bag ‚©‚ç1–‡‚¾‚¯œ‹ + —š—ğ ---
-        var processedCells = new HashSet<Vector2Int>();
-        var removedVictims = new List<SymbolSO>();
-
-        foreach (var req in score.DestroyQueue)
-        {
-            var pos = req.Pos;
-            if (!processedCells.Add(pos)) continue;
-
-            var victim = req.Meta?.Victim ?? grid[pos.x, pos.y];
-            if (victim == null) continue;
-
-            if (grid[pos.x, pos.y] == victim) grid[pos.x, pos.y] = null;
-
-            if (run?.Bag != null && run.Bag.RemoveOne(victim))
-                removedVictims.Add(victim);
-
-            run.DestroyHistory.Add(new DestroyEntry
-            {
-                Floor = run.Floor,
-                SpinIndex = run.TotalSpins,
-                Symbol = victim,
-                PosX = pos.x,
-                PosY = pos.y,
-                Cause = req.Meta?.Cause ?? "Unknown"
-            });
-        }
-
-        // --- C) ”Õ–Ê‚ğ‰‚ß‚ÄƒNƒŠƒA•`‰æi‚±‚±‚ÅŒ©‚½–Ú‚ªÁ‚¦‚éj ---
-        if (score.SpawnQueue != null && score.SpawnQueue.Count > 0)
-        {
-            // ‹óƒ}ƒX‚ÌƒŠƒXƒg‚ğì‚éiOwner—Dæ‚Ég‚Á‚½‚çXV‚·‚éj
-            var empties = new List<Vector2Int>();
-            int W = grid.GetLength(0), H = grid.GetLength(1);
-            for (int y = 0; y < H; y++)
-                for (int x = 0; x < W; x++)
-                    if (grid[x, y] == null)
-                        empties.Add(new Vector2Int(x, y));
-
-            // ƒŠƒNƒGƒXƒg‡‚Éˆ—
+        endGamePresenter?.ShowVictory(() =>
+            SceneLoader.LoadTitle();
+        });
+
+        //  Crngiß‚È‚ßAtAË‘Ì‹[V[hÅˆêrng
+        //   DÈOKFtAÈ‚ç–ˆñ“¯‚vr[É‚È‚
+        run.CurrentUidGrid = uidPreview;                    //  Û‘
+        hudPresenter?.SetLastScoreRaw("+0");
+        countdownCoordinator?.InitializeAndApply(run, preview); //  ñ‚©‚JEg
+            // ãƒªã‚¯ã‚¨ã‚¹ãƒˆé †ã«å‡¦ç†
             for (int i = 0; i < score.SpawnQueue.Count; i++)
             {
                 var sreq = score.SpawnQueue[i];
@@ -527,38 +165,38 @@ public class GameController : MonoBehaviour
 
                 Vector2Int dst = sreq.Pos;
 
-                // Šó–]À•W‚ª‹ó‚¢‚Ä‚¢‚È‚¯‚ê‚ÎA‹ó‚«‚©‚çƒ‰ƒ“ƒ_ƒ€‚ÅE‚¤
+                // å¸Œæœ›åº§æ¨™ãŒç©ºã„ã¦ã„ãªã‘ã‚Œã°ã€ç©ºãã‹ã‚‰ãƒ©ãƒ³ãƒ€ãƒ ã§æ‹¾ã†
                 bool canUsePreferred = InRange(dst, grid) && grid[dst.x, dst.y] == null;
                 if (!canUsePreferred)
                 {
-                    if (empties.Count == 0) break; // ’u‚¯‚È‚¢
+                    if (empties.Count == 0) break; // ç½®ã‘ãªã„
                     int pick = rng != null ? rng.Next(empties.Count) : UnityEngine.Random.Range(0, empties.Count);
                     dst = empties[pick];
                 }
 
-                // ”Õ–Ê‚É’u‚­
+                // ç›¤é¢ã«ç½®ã
                 grid[dst.x, dst.y] = sreq.Def;
 
-                // Bag ‚É‚à’Ç‰Ái”j‰ó‚ÅŒ¸‚Á‚½•ª‚Æ®‡‚ğæ‚éj
+                // Bag ã«ã‚‚è¿½åŠ ï¼ˆç ´å£Šã§æ¸›ã£ãŸåˆ†ã¨æ•´åˆã‚’å–ã‚‹ï¼‰
                 run?.Bag?.Add(sreq.Def);
 
-                // Á”ï‚µ‚½‹ó‚«‚ğœ‹
+                // æ¶ˆè²»ã—ãŸç©ºãã‚’é™¤å»
                 for (int k = 0; k < empties.Count; k++)
                     if (empties[k].x == dst.x && empties[k].y == dst.y)
                     { empties.RemoveAt(k); break; }
             }
 
-            // g‚¢I‚í‚Á‚½ƒLƒ…[‚ÍƒNƒŠƒA
+            // ä½¿ã„çµ‚ã‚ã£ãŸã‚­ãƒ¥ãƒ¼ã¯ã‚¯ãƒªã‚¢
             score.SpawnQueue.Clear();
         }
         boardView.SetFromGrid(grid);
-        InitializeAndApplyCountdowns(grid); // š’Ç‰Á
+        InitializeAndApplyCountdowns(grid); // â˜…è¿½åŠ 
 
-        // i”CˆÓjƒCƒ“ƒxƒ“ƒgƒŠUI‚Ì”½‰f
+        // ï¼ˆä»»æ„ï¼‰ã‚¤ãƒ³ãƒ™ãƒ³ãƒˆãƒªUIã®åæ˜ 
         if (inventoryView != null && removedVictims.Count > 0)
             foreach (var v in removedVictims) inventoryView.OnBagOneRemoved(v);
 
-        // --- D) ”j‰óƒ{[ƒiƒX‚Ì‰ÁZ•ƒ|ƒbƒvƒAƒbƒvi‘O‰ñ‚ÌC³‚Ç‚¨‚èj ---
+        // --- D) ç ´å£Šãƒœãƒ¼ãƒŠã‚¹ã®åŠ ç®—ï¼†ãƒãƒƒãƒ—ã‚¢ãƒƒãƒ—ï¼ˆå‰å›ã®ä¿®æ­£ã©ãŠã‚Šï¼‰ ---
         if (score.CellGains != null && score.CellGains.Count > 0)
         {
             int extra = 0;
@@ -577,14 +215,14 @@ public class GameController : MonoBehaviour
         return p.x >= 0 && p.x < W && p.y >= 0 && p.y < H;
     }
 
-    // GameController.cs ‚É’Ç‰Á
+    // GameController.cs ã«è¿½åŠ 
     void InitializeAndApplyCountdowns(SymbolSO[,] grid)
     {
         if (grid == null) return;
 
         RebuildCountdownSourcesFromRun(grid);
 
-        // ‰Šú‰»F”Õ–Êã‚Ì uid ‚É‘Î‚µ‚Ä EnsureInitializedByUid
+        // åˆæœŸåŒ–ï¼šç›¤é¢ä¸Šã® uid ã«å¯¾ã—ã¦ EnsureInitializedByUid
         int W = grid.GetLength(0), H = grid.GetLength(1);
         for (int y = 0; y < H; y++)
             for (int x = 0; x < W; x++)
@@ -600,7 +238,7 @@ public class GameController : MonoBehaviour
                         ce.EnsureInitializedByUid(uid, run, pos);
             }
 
-        // ”½‰f
+        // åæ˜ 
         spinAnimator.SetCountdownSources(countdownSources, run);
         boardView.SetCountdownSources(countdownSources, run);
         boardView.ApplyCountdownsForCurrentGrid();
@@ -611,7 +249,7 @@ public class GameController : MonoBehaviour
         countdownSources.Clear();
         var uniq = new HashSet<ScriptableObject>();
 
-        // Bag ‚©‚çiÀÛ‚É‘¶İ‚·‚éŒÂ‘Ì‚Ìí—Şj
+        // Bag ã‹ã‚‰ï¼ˆå®Ÿéš›ã«å­˜åœ¨ã™ã‚‹å€‹ä½“ã®ç¨®é¡ï¼‰
         foreach (var it in run.Bag.Items)
         {
             var s = it.Symbol;
@@ -622,7 +260,7 @@ public class GameController : MonoBehaviour
                 if (so is ICountdownEffect ce && uniq.Add(so)) countdownSources.Add(ce);
             }
         }
-        // ”Õ–Ê‚©‚çi•ÛŒ¯j
+        // ç›¤é¢ã‹ã‚‰ï¼ˆä¿é™ºï¼‰
         if (grid != null)
         {
             int W = grid.GetLength(0), H = grid.GetLength(1);
@@ -654,11 +292,11 @@ public class GameController : MonoBehaviour
                 int uid = run.CurrentUidGrid[x, y];
                 if (uid <= 0) continue;
 
-                var pos = new Vector2Int(x, y); // ƒƒO/‰‰oˆÊ’u‚Ì–ÚˆÀ—p
+                var pos = new Vector2Int(x, y); // ãƒ­ã‚°/æ¼”å‡ºä½ç½®ã®ç›®å®‰ç”¨
                 for (int i = 0; i < s.Effects.Count; i++)
                 {
                     if (s.Effects[i] is ICountdownEffect ce)
-                        ce.EnsureInitializedByUid(uid, run, pos);   // š UID ”Å‚Å–‘O“o˜^
+                        ce.EnsureInitializedByUid(uid, run, pos);   // â˜… UID ç‰ˆã§äº‹å‰ç™»éŒ²
                 }
             }
     }
@@ -692,7 +330,7 @@ public class GameController : MonoBehaviour
         {
             if (op.Op == "DestroySelf" && op.Uid > 0)
             {
-                // Œ»İ‚Ì”Õ–Êã‚Å uid ‚ÌƒZƒ‹‚ğ’T‚µ‚ÄÁ‚·
+                // ç¾åœ¨ã®ç›¤é¢ä¸Šã§ uid ã®ã‚»ãƒ«ã‚’æ¢ã—ã¦æ¶ˆã™
                 for (int y = 0; y < H; y++)
                     for (int x = 0; x < W; x++)
                     {
